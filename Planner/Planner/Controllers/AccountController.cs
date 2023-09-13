@@ -49,6 +49,37 @@ public class AccountController : Controller
         
         await Authenticate(registerModel.Username);
         
+        return RedirectToAction("Login");
+    }
+    
+    [HttpGet]
+    public IActionResult Login()
+    {
+        return View();
+    }
+    
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> Login(LoginViewModel loginModel)
+    {
+        if (!ModelState.IsValid)
+        {
+            TempData["Error"] = $"Invalid {nameof(loginModel)}";
+            
+            return View(loginModel);
+        }
+        
+        var loginResult = await _userService.Login(loginModel.Username, loginModel.Password);
+
+        if (!loginResult.IsSuccessful)
+        {
+            TempData["Error"] = loginResult.Message;
+            
+            return View(loginModel);
+        }
+        
+        await Authenticate(loginModel.Username);
+        
         return RedirectToAction("Privacy", "Home");
     }
     
