@@ -9,6 +9,6 @@ public interface IRepository<T> where T : BaseEntity
     Task<Result<bool>> AddAsync(T entity);
     Task<Result<bool>> DeleteAsync(T entity);
     Task<Result<bool>> UpdateAsync(T entity);
-    Task<Result<T>> GetAsync(Expression<Func<T, bool>> filter = null, 
+    Task<Result<List<T>>> GetAsync(Expression<Func<T, bool>> filter = null, 
         Expression<Func<IQueryable<T>, IOrderedQueryable<T>>> orderBy = null);
 }
