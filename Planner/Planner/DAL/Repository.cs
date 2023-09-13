@@ -21,11 +21,11 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         {
             var entityById = await _dbSet.FindAsync(id);
 
-            return entityById == null ? new Result<T>(false, $"{nameof(T)} not found") : new Result<T>(true);
+            return entityById == null ? new Result<T>(false, $"entity not found") : new Result<T>(true);
         }
         catch (Exception ex)
         {
-            return new Result<T>(false, $"Failed to add {nameof(T)} to data base. Error: {ex.Message}");
+            return new Result<T>(false, $"Failed to add entity to data base. Error: {ex.Message}");
         }
     }                                                                                                               
 
@@ -41,7 +41,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
         catch (Exception ex)
         {
-            return new Result<bool>(false, $"Failed to add {nameof(T)} to data base. Error: {ex.Message}");
+            return new Result<bool>(false, $"Failed to add entity to data base. Error: {ex.Message}");
         }
     }
 
@@ -62,7 +62,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
         catch (Exception ex)
         {
-            return new Result<bool>(false, $"Failed to delete {nameof(T)} from data base. Error: {ex.Message}");
+            return new Result<bool>(false, $"Failed to delete entity from data base. Error: {ex.Message}");
         }
     }
 
@@ -79,7 +79,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
         catch (Exception ex)
         {
-            return new Result<bool>(false, $"Failed to update {nameof(T)} to data base. Error: {ex.Message}");
+            return new Result<bool>(false, $"Failed to update entity to data base. Error: {ex.Message}");
         }
     }
 
@@ -104,7 +104,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
         catch (Exception ex)
         {
-            return new Result<List<T>>(false, $"Failed to update {nameof(T)} to data base. Error: {ex.Message}");
+            return new Result<List<T>>(false, $"Failed to update entity to data base. Error: {ex.Message}");
         }
     }
 }
