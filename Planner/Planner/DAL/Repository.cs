@@ -83,7 +83,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         }
     }
 
-    public async Task<Result<T>> GetAsync(Expression<Func<T, bool>> filter = null, 
+    public async Task<Result<List<T>>> GetAsync(Expression<Func<T, bool>> filter = null, 
         Expression<Func<IQueryable<T>, IOrderedQueryable<T>>> orderBy = null)
     {
         try
@@ -97,14 +97,14 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
 
             if (orderBy != null)
             {
-                return new Result<T>(true, await orderBy.Compile()(query).ToListAsync());
+                return new Result<List<T>>(true, await orderBy.Compile()(query).ToListAsync());
             }
             
-            return new Result<T>(true, await query.ToListAsync());
+            return new Result<List<T>>(true, await query.ToListAsync());
         }
         catch (Exception ex)
         {
-            return new Result<T>(false, $"Failed to update {nameof(T)} to data base. Error: {ex.Message}");
+            return new Result<List<T>>(false, $"Failed to update {nameof(T)} to data base. Error: {ex.Message}");
         }
     }
 }
