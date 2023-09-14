@@ -75,6 +75,28 @@ public class UserService : IUserService
         return new Result<bool>(true);
     }
 
+    public async Task<Result<User>> GetUserByUsername(string username)
+    {
+        if (string.IsNullOrEmpty(username))
+        {
+            return new Result<User>(false, "Username must no be empty");
+        }
+
+        var getUserResult = await _repository.GetAsync(u => u.Username == username);
+        
+        if (!getUserResult.IsSuccessful)
+        {
+            return new Result<User>(false, $"Failed to user by username: {username}. Error: {getUserResult.Message}");
+        }
+        
+        if (getUserResult.Data == null)
+        {
+            return new Result<User>(false, $"Failed to user by username: {username}. User not found");
+        }
+
+        return new Result<User>(true, getUserResult.Data.FirstOrDefault());
+    }
+
     private async Task<bool> IsFreeUsername(string username)
     {
         var result = await _repository.GetAsync(u => u.Username.Equals(username));
