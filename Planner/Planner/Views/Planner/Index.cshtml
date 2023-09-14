@@ -1,0 +1,44 @@
+@model List<Planner.Core.Models.DailyRoutineTask>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Task List</title>
+</head>
+<body>
+
+<div class="container">
+    <h2 class="mt-5">Task List</h2>
+    <div class="row">
+        @if (Model != null)
+        {
+            @foreach (var task in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@task.Name</h5>
+                            <p class="card-text">@task.Description</p>
+                            <p class="card-text">Date: @task.Date.ToShortDateString()</p>
+                            <p class="card-text">Priority: @task.Priority</p>
+                            <p class="card-text">Completed: @task.IsDone ? "Yes" : "No"</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger">
+            @TempData["Error"]
+        </div>
+    }    
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
