@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Planner.DAL;
 
@@ -11,9 +12,11 @@ using Planner.DAL;
 namespace Planner.Migrations
 {
     [DbContext(typeof(Planner.DAL.AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [Migration("20230914063038_AddPriorityEnumForTask")]
+    partial class AddPriorityEnumForTask
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -112,20 +115,16 @@ namespace Planner.Migrations
 
             modelBuilder.Entity("Planner.Core.Models.DailyRoutineTask", b =>
                 {
-                    b.HasOne("Planner.Core.Models.User", "User")
+                    b.HasOne("Planner.Core.Models.User", null)
                         .WithMany("DailyRoutineTasks")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Planner.Core.Models.Reminder", b =>
                 {
-                    b.HasOne("Planner.Core.Models.User", "User")
+                    b.HasOne("Planner.Core.Models.User", null)
                         .WithMany("Reminders")
                         .HasForeignKey("UserId");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Planner.Core.Models.User", b =>
