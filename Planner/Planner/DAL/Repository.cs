@@ -21,7 +21,7 @@ public class Repository<T> : IRepository<T> where T : BaseEntity
         {
             var entityById = await _dbSet.FindAsync(id);
 
-            return entityById == null ? new Result<T>(false, $"entity not found") : new Result<T>(true);
+            return entityById == null ? new Result<T>(false) : new Result<T>(true, entityById);
         }
         catch (Exception ex)
         {
