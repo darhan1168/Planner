@@ -1,3 +1,4 @@
+using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Planner.BLL.Interfaces;
@@ -12,11 +13,13 @@ public class PlannerController : Controller
 {
     private readonly IDailyTaskService _dailyTaskService;
     private readonly IUserService _userService;
+    private readonly IDateService _dateService;
 
-    public PlannerController(IDailyTaskService dailyTaskService, IUserService userService)
+    public PlannerController(IDailyTaskService dailyTaskService, IUserService userService, IDateService dateService)
     {
         _dailyTaskService = dailyTaskService;
         _userService = userService;
+        _dateService = dateService;
     }
     
     [HttpGet]
@@ -40,9 +43,23 @@ public class PlannerController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> CreateTask()
+    public async Task<IActionResult> CreateTask(string date)
     {
-        return View();
+        var getDateResult = _dateService.GetDateTime(date);
+        
+        if (!getDateResult.IsSuccessful)
+        {
+            TempData["Error"] = getDateResult.Message;
+            
+            return RedirectToAction("Index");
+        }
+        
+        var dailyRoutineTask = new DailyRoutineTaskViewModel
+        {
+            Date = getDateResult.Data
+        };
+
+        return View(dailyRoutineTask);
     }
     
     [HttpPost]
