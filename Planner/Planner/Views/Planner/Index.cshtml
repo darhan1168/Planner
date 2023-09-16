@@ -80,6 +80,12 @@
           font-size: 3rem;
           font-weight: 100;
         }
+        
+        .event:hover
+        {
+          cursor: pointer;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -104,9 +110,9 @@
                     {
                         if (task.Date == currentDate.Date)
                         {
-                            <div class="event securities">
+                            <div class="event securities text-center">
                                 <p class="title">@task.Name</p>
-                                <p class="time">@task.Date.ToShortTimeString()</p>
+                                <a class="btn-details" data-url="@Url.Action("Details", "Planner", new { id = task.Id })"></a>
                             </div>
                         }
                     }                  
@@ -169,6 +175,15 @@
                 window.location.href = '/Planner/CreateTask?date=' + dateNum;
             });
         });
+       
+    $(document).ready(function() {
+        $(".event").click(function() {
+            var url = $(this).find(".btn-details").attr("data-url");
+            if (url) {
+                window.location.href = url;
+            }
+        });
+    });   
 </script>
 </body>
 </html>
