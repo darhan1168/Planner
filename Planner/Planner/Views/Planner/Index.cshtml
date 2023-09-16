@@ -97,19 +97,19 @@
                     <p class="date-day">@currentDate.ToString("ddd")</p>
                 </div>
                 <div class="events">
+                    <div class="text-center">
+                        <a class="btn btn-warning mt-2 add-task">Add Task</a>
+                    </div>
                     @foreach (var task in Model)
                     {
                         if (task.Date == currentDate.Date)
                         {
-                            <div class="event start-2 end-5 securities">
+                            <div class="event securities">
                                 <p class="title">@task.Name</p>
                                 <p class="time">@task.Date.ToShortTimeString()</p>
                             </div>
                         }
                     }                  
-                </div>
-                <div class="text-center">
-                    <a class="btn btn-warning mt-2 add-task">Add Task</a>
                 </div>
             </div>
             currentDate = currentDate.AddDays(1);
