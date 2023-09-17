@@ -102,4 +102,20 @@ public class PlannerController : Controller
         
         return RedirectToAction("Index");
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> Details(int id)
+    {
+        var getResult = await _dailyTaskService.GetTaskById(id);
+        
+        if (!getResult.IsSuccessful)
+        {
+            TempData["Error"] = getResult.Message;
+            
+            return RedirectToAction("Index");
+        }
+
+        return View(getResult.Data);
+    }
+
 }
