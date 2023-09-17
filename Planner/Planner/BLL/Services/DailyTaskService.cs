@@ -71,6 +71,26 @@ public class DailyTaskService : IDailyTaskService
         return new Result<bool>(true);
     }
 
+    public async Task<Result<bool>> CompleteDailyTask(int id)
+    {
+        var getResult = await GetTaskById(id);
+        
+        if (!getResult.IsSuccessful)
+        {
+            return new Result<bool>(false, getResult.Message);
+        }
+
+        getResult.Data.IsDone = true;
+        
+        var updateResult = await UpdateDailyTask(getResult.Data);
+        
+        if (!updateResult.IsSuccessful)
+        {
+            return new Result<bool>(false, updateResult.Message);
+        }
+        
+        return new Result<bool>(true);
+    }
 
     public async Task<Result<DailyRoutineTask>> GetTaskById(int id)
     {
