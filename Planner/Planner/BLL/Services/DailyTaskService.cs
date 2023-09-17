@@ -71,6 +71,19 @@ public class DailyTaskService : IDailyTaskService
         return new Result<bool>(true);
     }
 
+
+    public async Task<Result<DailyRoutineTask>> GetTaskById(int id)
+    {
+        var getResult = await _repository.GetByIdAsync(id);
+
+        if (!getResult.IsSuccessful)
+        {
+            return new Result<DailyRoutineTask>(false, getResult.Message);
+        }
+        
+        return new Result<DailyRoutineTask>(true, getResult.Data);
+    }
+
     public async Task<Result<List<DailyRoutineTask>>> GetAllDailyTaskByUsername(string username)
     {
         var getUserResult = await _userService.GetUserByUsername(username);
