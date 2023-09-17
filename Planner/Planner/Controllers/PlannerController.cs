@@ -118,4 +118,16 @@ public class PlannerController : Controller
         return View(getResult.Data);
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CompletedTask(int id)
+    {
+        var completeResult = await _dailyTaskService.CompleteDailyTask(id);
+        
+        if (!completeResult.IsSuccessful)
+        {
+            TempData["Error"] = completeResult.Message;
+        }
+        
+        return RedirectToAction("Details", new {id = id});
+    }
 }
