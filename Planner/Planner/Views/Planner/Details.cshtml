@@ -31,7 +31,9 @@
 
     <div class="mt-3">
         <a asp-action="Index" asp-controller="Planner" class="btn btn-primary">Back to List</a>
-        <button class="btn btn-danger ml-2" id="deleteTask">Delete</button>
+        <form action="@Url.Action("DeleteTask", "Planner", new { id = Model.Id })" method="post">
+           <button class="btn btn-danger ml-2" id="deleteTask">Delete</button>
+        </form>
         <button class="btn btn-warning ml-2" id="editTask">Edit</button>
         <form action="@Url.Action("CompletedTask", "Planner", new { id = Model.Id })" method="post">
             <button type="submit" class="btn btn-success ml-2">Complete</button>

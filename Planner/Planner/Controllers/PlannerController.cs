@@ -119,6 +119,21 @@ public class PlannerController : Controller
     }
 
     [HttpPost]
+    public async Task<IActionResult> DeleteTask(int id)
+    {
+        var deleteResult = await _dailyTaskService.DeleteDailyTask(id);
+        
+        if (!deleteResult.IsSuccessful)
+        {
+            TempData["Error"] = deleteResult.Message;
+            
+            return RedirectToAction("Details", new {id = id});
+        }
+        
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
     public async Task<IActionResult> CompletedTask(int id)
     {
         var completeResult = await _dailyTaskService.CompleteDailyTask(id);
