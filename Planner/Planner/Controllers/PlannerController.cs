@@ -132,6 +132,40 @@ public class PlannerController : Controller
         
         return RedirectToAction("Index");
     }
+    
+    [HttpGet]
+    public async Task<IActionResult> UpdateTask(int id)
+    {
+        var getResult = await _dailyTaskService.GetTaskById(id);
+        
+        if (!getResult.IsSuccessful)
+        {
+            TempData["Error"] = getResult.Message;
+            
+            return RedirectToAction("Details", new {id = id});
+        }
+
+        var dailyRoutineTaskViewModel = new DailyRoutineTaskViewModel();
+        getResult.Data.MapTo(dailyRoutineTaskViewModel);
+
+        return View(dailyRoutineTaskViewModel);
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> UpdateTask(DailyRoutineTaskViewModel newTask)
+    {
+        var dailyRoutineTask = new DailyRoutineTask();
+        newTask.MapTo(dailyRoutineTask);
+        
+        var updateResult = await _dailyTaskService.UpdateDailyTask(dailyRoutineTask);
+        
+        if (!updateResult.IsSuccessful)
+        {
+            TempData["Error"] = updateResult.Message;
+        }
+        
+        return RedirectToAction("Details", new {id = newTask.Id});
+    }
 
     [HttpPost]
     public async Task<IActionResult> CompletedTask(int id)

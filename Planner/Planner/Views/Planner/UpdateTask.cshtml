@@ -1,0 +1,45 @@
+@using Planner.Core.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model DailyRoutineTaskViewModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Task</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <h2>Edit Task</h2>
+    <form asp-action="UpdateTask" asp-controller="Planner" method="post">
+        <input type="hidden" name="Id" value="@Model.Id" />
+        <input type="hidden" name="Date" value="@Model.Date" />
+        <input type="hidden" name="IsDone" value="@Model.IsDone" />
+        
+        <div class="form-group">
+            <label for="Name">Name:</label>
+            <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="Description">Description:</label>
+            <textarea class="form-control" id="Description" name="Description" required>@Model.Description</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="Priority">Priority:</label>
+            <select class="form-control" id="Priority" name="Priority" required>
+                <option value="High">High</option>
+                <option value="Medium">Medium</option>
+                <option value="Low">Low</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
